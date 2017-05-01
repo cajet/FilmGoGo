@@ -7,7 +7,7 @@ A movie ticket booking system.
 1. Product Design Models and Related Documents: [Wiki](https://github.com/cajet/FilmGoGo/wiki)
 2. TodoList and some helping docs: [Issues](https://github.com/cajet/FilmGoGo/issues)
 
-### Teammates
+### Developers
 Kaijia Huang : TeamLeader and front&back end developer [@cajet](https://github.com/cajet)</br>
 Shengyou Wei : front&back end developer [@devin1w](https://github.com/devin1w)</br>
 Guoyang Hong : front&back end developer [@wigh725](https://github.com/wigh725)</br>
