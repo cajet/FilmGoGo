@@ -14,13 +14,13 @@ public class CustomerDAO {
 	public boolean isExisted(String name, String password)
 	{
 		Object[] para = new Object[]{name, password};
-		String stme = "select name from customer where name = ? and password = ?;";
+		String stme = "select name from customer where binary name = ? and binary password = ?;";
 		return !jdb.queryForList(stme, para).isEmpty();
 	}
 	
 	public boolean isNameExisted(String name)
 	{
-		String stmt = "select * from customer where name = ?;";
+		String stmt = "select * from customer where binary name = ?;";
 		Object[] para = new Object[]{name};
 		return !jdb.queryForList(stmt, para).isEmpty();
 	}
