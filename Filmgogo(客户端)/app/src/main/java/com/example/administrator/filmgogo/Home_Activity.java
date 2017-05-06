@@ -68,7 +68,8 @@ public class Home_Activity extends Activity{
         });
     }
 
-    Runnable movieTask= new Runnable() { //返回所有电影的信息
+	//返回所有电影的信息
+    Runnable movieTask= new Runnable() { 
         @Override
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/movie";
@@ -118,7 +119,8 @@ public class Home_Activity extends Activity{
         }
     };
 
-    Runnable cinemaTask= new Runnable() {  //返回所有的影院信息
+    //返回所有的影院信息
+    Runnable cinemaTask= new Runnable() {
         @Override
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/cinema";
@@ -165,8 +167,9 @@ public class Home_Activity extends Activity{
             }
         }
     };
-
-    Runnable showtimeTask= new Runnable() { //返回具体影院具体电影的场次
+    
+	//返回具体影院具体电影的场次
+    Runnable showtimeTask= new Runnable() { 
         @Override
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/showtime";
