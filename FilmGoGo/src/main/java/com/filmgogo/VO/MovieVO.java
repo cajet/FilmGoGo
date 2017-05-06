@@ -4,9 +4,13 @@ public class MovieVO {
 	
 	private int id;
 	
+	private String type;
+	
 	private String name;
 	
-    private String img;
+	private String description;
+	
+    private String image;
     
 	public int getId()
 	{
@@ -16,6 +20,7 @@ public class MovieVO {
 	{
 		this.id = id;
 	}
+	
 	public String getName()
 	{
 		return name;
@@ -24,12 +29,31 @@ public class MovieVO {
 	{
 		this.name = name;
 	}
+	
 	public String getImg()
 	{
-		return img;
+		return image;
 	}
-	public void setImg(String img)
+	public void setImg(String image)
 	{
-		this.img = img;
+		this.image = image;
+	}
+	
+	public String getType()
+	{
+		return type;
+	}
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+	
+	public String getDescription()
+	{
+		return description;
+	}
+	public void setDescription(String description)
+	{
+		this.description = description;
 	}
 }

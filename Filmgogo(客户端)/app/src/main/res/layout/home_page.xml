@@ -7,9 +7,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <Button
+        android:id="@+id/movie_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录/注册成功，这是主页"
-        android:textSize="20dp"/>
+        android:text="发送电影请求"/>
+    <Button
+        android:id="@+id/cinema_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发送影院请求"/>
+    <Button
+        android:id="@+id/showtime_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="发送具体电影和影院的场次请求"/>
+    <TextView
+        android:id="@+id/response_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="返回的数据"/>
 </LinearLayout>

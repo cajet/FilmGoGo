@@ -10,6 +10,8 @@ public class CinemaVO {
 	
 	private String city;
 	
+	private String area;
+	
 	public int getId()
 	{
 		return id;
@@ -41,5 +43,13 @@ public class CinemaVO {
 	public void setCity(String city)
 	{
 		this.city = city;
+	}
+	public String getArea() 
+	{
+		return area;
+	}
+	public void setArea(String area) 
+	{
+		this.area= area;
 	}
 }
