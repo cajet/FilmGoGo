@@ -7,22 +7,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/movie_request"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发送电影请求"/>
-    <Button
-        android:id="@+id/cinema_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发送影院请求"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/movie_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="发送电影请求"/>
+        <Button
+            android:id="@+id/cinema_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送影院请求"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/showtime_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:text="发送具体电影和影院的场次请求"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/seat_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="查看具体场次的座位情况"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/list_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="查看订单"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:id="@+id/add_reservation"
+            android:text="生成订单"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/delete_reservation"
+            android:text="删除订单"/>
+    </LinearLayout>
+
     <TextView
         android:id="@+id/response_content"
         android:layout_width="wrap_content"
