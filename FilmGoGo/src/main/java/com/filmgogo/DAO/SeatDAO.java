@@ -1,5 +1,6 @@
 package com.filmgogo.DAO;
 
+import java.security.interfaces.RSAKey;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,7 +21,7 @@ public class SeatDAO {
 	
 	public String getAllseats(int showtimeid)
     {
-    	String sql = "select seat.id, seat.state from seat " + "where seat.stid = ?;";
+    	String sql = "select seat.id, seat.state, seat.row, seat.column from seat " + "where seat.stid = ?;";
     	Object[] para = new Object[]{showtimeid};
     	List<SeatVO> ls = jdb.query(sql, para, new RowMapper<SeatVO>(){
 
@@ -29,6 +30,8 @@ public class SeatDAO {
 				SeatVO s = new SeatVO();
 				s.setId(res.getInt("id"));
 				s.setState(res.getString("state"));
+				s.setRow(res.getInt("row"));
+				s.setColumn(res.getInt("column"));
 				return s;
 			}
     		

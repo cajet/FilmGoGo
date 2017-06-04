@@ -1,6 +1,7 @@
 package com.filmgogo.Controller;
 
 import java.awt.List;
+import java.awt.RenderingHints.Key;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +13,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
 
+import javax.security.auth.Subject;
+
+import org.apache.commons.collections.functors.ForClosure;
 import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 
 import com.mysql.fabric.xmlrpc.base.Array;
@@ -68,7 +74,7 @@ public class ReaddataFromAPI {
 			}
 	     } catch (Exception e) {  
 			  System.out.println(e);  
-	     } 
+	     }
 		
 		
 		/*------------------------获取获取周边影院的API，插入影院数据-----------------------*/
@@ -81,18 +87,65 @@ public class ReaddataFromAPI {
 		JSONObject subObject2;
 		for (int i= 0; i< array2.size(); i++) {
 			subObject2= array2.getJSONObject(i); 
-			insert_cinema = "insert into cinema(name, address, city, area) values('"+subObject2.get("nm")+"','"+subObject2.get("addr")+"','广州','"+subObject2.get("area")+"');";
+			insert_cinema = "insert into cinema(name, address, city, area, apiid) values('"+subObject2.get("nm")+"','"+subObject2.get("addr")+"','广州','"+subObject2.get("area")+"','"+subObject2.get("id")+"');";
 			loadDatatoDB(insert_cinema);
 		}
-
+		
+		
+		/*-------------------------获取场次的API，插入showtime数据库-----------------------*/
+		/*ArrayList<String> movies_array= getMoviesID();
+		ArrayList<String> cinema_array= getCinemasID();
+		for (int i= 0; i< movies_array.size(); i++) {
+			for (int j= 0; j< cinema_array.size(); j++) {
+				String url_showtime= "http://m.maoyan.com/showtime/wrap.json?cinemaid="+cinema_array.get(j)+"&movieid="+movies_array.get(i);
+				System.out.println(url_showtime);
+				String json_showtime= loadJson(url_showtime);
+				JSONObject jsonObject3= JSONObject.fromObject(json_showtime);
+				load_showtime_TodayandTomorrow(jsonObject3, movies_array.get(i), cinema_array.get(j));
+			}
+		}*/
+		
+		/*------------------------获取座位情况的API，插入seat数据库--------------------------*/
+		/*ArrayList<String> showtimes_array= getShowtimeID();
+		//获取今天和明天的日期
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR); 
+		int month = c.get(Calendar.MONTH)+1;
+		int day = c.get(Calendar.DAY_OF_MONTH)+1;
+		int day2= c.get(Calendar.DAY_OF_MONTH);
+		String day_str= "-"+day;
+		String day2_str= "-"+day2;
+		String month_str= "-"+month;
+		if (month< 10) month_str= "-0"+month;
+		if (day< 10) day_str= "-0"+day;
+		if (day2< 10) day2_str= "-0"+day2;
+		String tomorrow= year+month_str+day_str;
+		String today= year+month_str+day2_str;
+		//载入今天的座位
+		for (int i= 0; i< showtimes_array.size(); i++) {
+			String url_seat_today= "http://m.maoyan.com/show/seats?showId="+showtimes_array.get(i)+"&showDate="+today;
+			System.out.println(url_seat_today);
+			String json_seat= loadJson(url_seat_today);
+			JSONObject jsonObject4= JSONObject.fromObject(json_seat);
+			load_seat_TodayandTomorrow(jsonObject4, showtimes_array.get(i));
+		}
+		//载入明天的座位
+		for (int i= 0; i< showtimes_array.size(); i++) {
+			String url_seat_tomorrow= "http://m.maoyan.com/show/seats?showId="+showtimes_array.get(i)+"&showDate="+tomorrow;
+			System.out.println(url_seat_tomorrow);
+			String json_seat= loadJson(url_seat_tomorrow);
+			JSONObject jsonObject4= JSONObject.fromObject(json_seat);
+			load_seat_TodayandTomorrow(jsonObject4, showtimes_array.get(i));
+		}
+		*/
 	}
 	
 	public static void initTable() {  //载入数据前，要先清除所有数据，使数据保持最新，不重复
 		String delete_movie_data= "delete from movie;";
 		loadDatatoDB(delete_movie_data);
 		
-		String delete_cinema_data= "delete from cinema;";
-		loadDatatoDB(delete_cinema_data);
+		/*String delete_cinema_data= "delete from cinema;";
+		loadDatatoDB(delete_cinema_data);*/
 		
 	}
 	
@@ -127,7 +180,107 @@ public class ReaddataFromAPI {
 	    }  
 	    return json.toString();  
 	} 
+	/*
+	public static void load_showtime_TodayandTomorrow(JSONObject jsonObject3, String movie_id, String cinema_id) {
+		//载入今天的场次数据
+		if (jsonObject3.getJSONObject("data").getJSONObject("DateShow").isEmpty()) return;
+		String today= jsonObject3.getJSONObject("data").getJSONObject("DateShow").toString().substring(2, 12);
+		JSONArray array3= jsonObject3.getJSONObject("data").getJSONObject("DateShow").getJSONArray(today); 
+		String insert_showtime, time;
+		JSONObject subObject3;
+		for (int i= 0; i< array3.size(); i++) {
+			subObject3= array3.getJSONObject(i); 
+			time= subObject3.get("tm")+" "+subObject3.get("showDate");
+			insert_showtime = "insert into showtime(time, price, mid, cid) values('"+ time + "','"+ 40 +"','"+ movie_id +"','"+ cinema_id +"');";
+			loadDatatoDB(insert_showtime);
+			System.out.println(time);
+		}
+		//载入明天的场次数据
+		String temp= jsonObject3.getJSONObject("data").getJSONObject("DateShow").toString().substring(11, 12);
+		int a = Integer.parseInt(temp)+1;
+		String tomorrow;
+		if (a>= 10) tomorrow= jsonObject3.getJSONObject("data").getJSONObject("DateShow").toString().substring(2, 10) + a;
+		else tomorrow= jsonObject3.getJSONObject("data").getJSONObject("DateShow").toString().substring(2, 10) + "0" +a;
+		
+		array3= jsonObject3.getJSONObject("data").getJSONObject("DateShow").getJSONArray(tomorrow); //载入明天的场次
+		for (int i= 0; i< array3.size(); i++) {
+			subObject3= array3.getJSONObject(i); 
+			time= subObject3.get("tm")+" "+subObject3.get("showDate");
+			insert_showtime = "insert into showtime(time, price, mid, cid) values('"+ time + "','"+ 43 +"','"+ movie_id +"','"+ cinema_id +"');";
+			loadDatatoDB(insert_showtime);
+			System.out.println(time);
+		}
+	}*/
+	/*
+	public static void load_seat_TodayandTomorrow(JSONObject jsonObject4, String showtime_id) {
+		if (jsonObject4.getJSONArray("sections").isEmpty()) return;
+		JSONObject TEMP= jsonObject4.getJSONArray("sections").getJSONObject(0);
+		JSONArray array = TEMP.getJSONArray("seatRows");
+		JSONArray sub_array;
+		JSONObject object, sub_object;
+		String insert_seat;
+		for (int i= 0; i<array.size(); i++) {
+			object= array.getJSONObject(i);
+			sub_array= object.getJSONArray("seats");
+			for (int j= 0; j< sub_array.size(); j++) {
+				sub_object= sub_array.getJSONObject(j);
+				insert_seat= "insert into seat(state, stid, row, column) values('"+ sub_object.get("type") + "','"+ showtime_id + "','"+ sub_object.get("rowNum") + "','"+ sub_object.get("columnNum") +"');"; 
+				loadDatatoDB(insert_seat);
+				//System.out.println(sub_object.get("type")+ " "+ showtime_id + " "+sub_object.get("rowNum") + " "+sub_object.get("columnNum"));
+			}
+		}
+	}
+	*/
+	/*public static ArrayList<String> getMoviesID() {
+		String find_movies_id= "select * from movie";
+		ArrayList<String> arrayList = new ArrayList<String>();
+		try {
+			con = DriverManager.getConnection(dburl, user, pass);  
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(find_movies_id);
+			while (rs.next()) {
+				arrayList.add(rs.getString(5));
+			}
+	     } catch (Exception e) {  
+			  System.out.println(e);  
+	     }
+		return arrayList;
+	}
 	
+	public static ArrayList<String> getCinemasID() {
+		String find_cinemas_id= "select * from cinema limit 2";  //因为API访问次数有限，所以只插入两个影院的场次数据
+		ArrayList<String> arrayList= new ArrayList<String>();
+		try {
+			con = DriverManager.getConnection(dburl, user, pass);  
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(find_cinemas_id);
+			while (rs.next()) {
+				arrayList.add(rs.getString(6));
+			}
+		} catch (Exception e) {  
+			  System.out.println(e);  
+	    }
+		return arrayList;
+	}*/
+	/*
+	public static ArrayList<String> getShowtimeID() {
+		String find_showtimes_id= "select * from showtime limit 10";  //因为API访问次数有限，所以只插入10个场次的座位数据
+		ArrayList<String> arrayList= new ArrayList<String>();
+		try {
+			con = DriverManager.getConnection(dburl, user, pass);  
+			con.setAutoCommit(false);
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(find_showtimes_id);
+			while (rs.next()) {
+				arrayList.add(rs.getString(6));
+			}
+		} catch (Exception e) {  
+			  System.out.println(e);  
+	    }
+		return arrayList;
+	}*/
 }
 
 

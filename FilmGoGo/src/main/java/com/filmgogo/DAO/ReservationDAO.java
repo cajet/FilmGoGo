@@ -20,7 +20,7 @@ public class ReservationDAO {
 	private JdbcTemplate jdb;
 	
 	public String getAllReservation(int customer_id) {
-		String sql= "select reservation.id, movie.name, cinema.name, showtime.time, seat.name, showtime.price from reservation, seat, showtime, movie, cinema "
+		String sql= "select reservation.id, movie.name, cinema.name, showtime.time, seat.row, seat.column, showtime.price from reservation, seat, showtime, movie, cinema "
 				+"where reservation.cuid= ? and seat.id= reservation.seatid and "
 				+ "showtime.id= seat.stid and movie.id= showtime.mid and cinema.id= showtime.cid;";
 		Object[] para= new Object[]{customer_id};
@@ -33,7 +33,8 @@ public class ReservationDAO {
 				r.setMovieName(res.getString("movie.name"));
 				r.setCinemaName(res.getString("cinema.name"));
 				r.setShowTime(res.getTimestamp("showtime.time"));
-				r.setSeatName(res.getString("seat.name"));
+				r.setSeatRow(res.getInt("seat.row"));
+				r.setSeatColumn(res.getInt("seat.column"));
 				r.setTicketPrice(res.getFloat("showtime.price"));
 				return r;
 			}

@@ -14,7 +14,9 @@ public class ReservationVO {
 	
 	private Timestamp show_time;
 	
-	private String seat_name;
+	private int seat_row;
+	
+	private int seat_column;
 	
 	private float ticket_price;
 	
@@ -34,8 +36,14 @@ public class ReservationVO {
 		return show_time;
 	}
 	
-	public String getSeatName() {
-		return seat_name;
+	public int getSeatRow() 
+	{
+		return seat_row;
+	}
+	
+	public int getSeatColumn() 
+	{
+		return seat_column;
 	}
 	
 	public float getTicketPrice() {
@@ -59,8 +67,14 @@ public class ReservationVO {
 		this.show_time= show_time;
 	}
 	
-	public void setSeatName(String seat_name) {
-		this.seat_name= seat_name;
+	public void setSeatRow(int seat_row)
+	{
+		this.seat_row= seat_row;
+	}
+	
+	public void setSeatColumn(int seat_column)
+	{
+		this.seat_column= seat_column;
 	}
 	
 	public void setTicketPrice(float ticket_price) {

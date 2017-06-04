@@ -284,7 +284,8 @@ public class Home_Activity extends Activity{
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
                     result= result + temp.get("id").toString()+" "
-                            + temp.getString("state")+ "\n";
+                            + temp.getString("state")+" "+
+                            temp.get("row").toString()+"排"+" "+ temp.get("column").toString()+"座"+"\n";
                 }
                 response_content.setText(result);
             } catch (Exception e) {
@@ -348,8 +349,9 @@ public class Home_Activity extends Activity{
                     JSONObject temp = array.getJSONObject(i);
                     JSONObject time = temp.getJSONObject("showTime");
                     Date d = new Date(time.getLong("time"));
-                    result= result + temp.get("id").toString()+" "+ temp.get("movieName")+ temp.get("cinemaName")
-                            + " "+ d + " "+ temp.get("ticketPrice") + " "+ temp.getString("seatName")+" "+ "\n";
+                    result= result + temp.get("id").toString()+" "+ temp.get("movieName")+ " "+temp.get("cinemaName")
+                            + " "+ d + " "+ temp.get("ticketPrice") + " "+ temp.get("seatRow").toString()+"排"
+                            + temp.get("seatColumn").toString()+"座"+"\n";
                 }
                 response_content.setText(result);
             } catch (Exception e) {
