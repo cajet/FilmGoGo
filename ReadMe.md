@@ -11,6 +11,6 @@ A movie ticket booking system.
 Kaijia Huang : TeamLeader and front&back end developer [@cajet](https://github.com/cajet)</br>
 Shengyou Wei : front&back end developer [@devin1w](https://github.com/devin1w)</br>
 Guoyang Hong : front&back end developer [@wigh725](https://github.com/wigh725)</br>
-Ziping Zeng : PM and front end developer</br>
+Ziping Zeng : PM and front end developer [@sysupipin](https://github.com/sysupipin)</br> 
 Pengyu Yang : front end developer [@ypy1205](https://github.com/ypy1205)</br>
 Yuanhong Liao : testing engineer</br>
