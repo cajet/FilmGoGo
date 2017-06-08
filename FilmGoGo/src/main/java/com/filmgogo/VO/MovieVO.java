@@ -16,6 +16,8 @@ public class MovieVO {
     
     private String star;
     
+    private int votes;
+    
 	public int getId()
 	{
 		return id;
@@ -75,5 +77,13 @@ public class MovieVO {
 	public void setStar(String star)
 	{
 		this.star= star;
+	}
+	public int getVotes()
+	{
+		return votes;
+	}
+	public void setVotes(int votes)
+	{
+		this.votes= votes;
 	}
 }
