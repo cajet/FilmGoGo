@@ -21,7 +21,7 @@ public class VoteMoviesRequest {
 	private MovieDAO md;
 	
 	@RequestMapping("/list")
-    void getOldMovies(HttpServletResponse response) throws IOException
+    void getAllVoteMovies(HttpServletResponse response) throws IOException
     {
     	response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
@@ -32,9 +32,27 @@ public class VoteMoviesRequest {
 		out.close();
     }
 	
-	@RequestMapping("/vote/{mid}")
-	void getShowtime(@PathVariable("mid") int mid, HttpServletResponse response) throws IOException
+	@RequestMapping("/vote/{cuid}/{mid}")
+	void votemovie(@PathVariable("mid") int mid, @PathVariable("cuid") int cuid,HttpServletResponse response) throws IOException
 	{
-		md.voteMovieById(mid);
+		md.voteMovieById(mid, cuid);
+	}
+	
+	@RequestMapping("/getVoteInfo/{cuid}")
+	void getVoteinfo(@PathVariable("cuid") int cuid,HttpServletResponse response) throws IOException
+	{
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		JSONObject res = new JSONObject();
+		res.put("votemovieid", md.getVoteInfo(cuid));
+		out.print(res.toString());
+		out.flush();
+		out.close();
+	}
+	
+	@RequestMapping("/setVoteZero/{mid}")
+	void setVoteZero(@PathVariable("mid") int mid,HttpServletResponse response) throws IOException 
+	{
+		md.setVoteZero(mid);
 	}
 }

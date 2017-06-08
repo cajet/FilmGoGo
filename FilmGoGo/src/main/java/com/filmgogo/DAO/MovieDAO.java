@@ -75,7 +75,7 @@ public class MovieDAO {
 		return JSONArray.fromObject(olm).toString();
 	}
 	
-	public void voteMovieById(int mid) {
+	public void voteMovieById(int mid, int cuid) {
 		String sql = "select votes from votemovie where id= ?;";
 		Object[] para = new Object[]{mid};
 		List<MovieVO> vlm= jdb.query(sql, para, new RowMapper<MovieVO>(){
@@ -90,6 +90,30 @@ public class MovieDAO {
 		votes= votes+1;
 		String update_sql = "update votemovie set votes= "+votes +" where id= "+mid+";";
 		jdb.update(update_sql);
+		
+		String insert_sql= "insert into vote (cuid, votemovieid) values(?, ?);";
+		jdb.update(insert_sql, new Object[]{cuid, mid});
+	}
+	
+	public String getVoteInfo(int cuid) {
+		String sql = "select * from vote where cuid= ?;";
+		Object[] para = new Object[]{cuid};
+		List<MovieVO> olm= jdb.query(sql, para, new RowMapper<MovieVO>(){
+			public MovieVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				MovieVO m = new MovieVO();
+				m.setId(res.getInt("votemovieid"));
+				return m;
+			}
+		});
+		return JSONArray.fromObject(olm).toString();
+	}
+	
+	public void setVoteZero(int mid) {
+		String set_sql= "update votemovie set votes= "+ 0 +" where id= "+mid+";";
+		jdb.update(set_sql);
+		String delete_sql= "delete from vote where votemovieid= ?;";
+		jdb.update(delete_sql, new Object[]{mid});
 	}
 	
 }
