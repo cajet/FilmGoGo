@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -24,7 +27,7 @@ import java.util.Date;
 
 public class OldMovieInfo extends Activity{
 
-    private Button movie_btn, showtime_btn, seat_btn, list_allvotemovie_btn, votemovie_btn,
+    private Button movie_btn, showtime_btn, seat_btn, list_allvotemovie_btn, votemovie_btn, getVotedInfo_btn,
             list_reservation_btn, add_reservation_btn, delete_reservation_btn;
     private TextView response_content;
 
@@ -45,6 +48,7 @@ public class OldMovieInfo extends Activity{
         response_content= (TextView) findViewById(R.id.oldmovie_response_content);
         list_allvotemovie_btn= (Button) findViewById(R.id.list_votemovie);
         votemovie_btn= (Button) findViewById(R.id.vote_movie);
+        getVotedInfo_btn= (Button) findViewById(R.id.getVotedInfo);
     }
 
     private void setListener() {
@@ -94,6 +98,20 @@ public class OldMovieInfo extends Activity{
             @Override
             public void onClick(View view) {
                 new Thread(List_votemovies_Task).start();
+            }
+        });
+
+        votemovie_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(Vote_movie_Task).start();
+            }
+        });
+
+        getVotedInfo_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(getVoteMoviesId_Task).start();
             }
         });
     }
@@ -365,12 +383,11 @@ public class OldMovieInfo extends Activity{
     Runnable List_votemovies_Task= new Runnable() {
         @Override
         public void run() {
-            String baseURL = "http://172.18.71.17:8080/FilmGoGo/oldshowtime";
+            String baseURL = "http://172.18.71.17:8080/FilmGoGo/votemovie";
             String result= "";
-            String TAG= "getOldShowTime";
-            int movieID= 8;
+            String TAG= "listVotemovies";
             try {
-                String url = baseURL + '/'+ String.valueOf(movieID);
+                String url = baseURL + "/list";
                 HttpGet httpGet= new HttpGet(url);
                 HttpResponse httpResponse= new DefaultHttpClient().execute(httpGet);
                 result = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
@@ -394,17 +411,78 @@ public class OldMovieInfo extends Activity{
             String TAG = "json";
             String result= "";
             try{
-                //response_content.setText(val); /*显示JSON数据格式*/
-                JSONArray array= new JSONObject(val).getJSONArray("oldshowtimes");
+                JSONArray array= new JSONObject(val).getJSONArray("votemovies");
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
-                    result= result + temp.get("id").toString()+" "+ temp.getString("oldTime") +" "
-                            + temp.getString("oldprice")+ "\n";
+                    result= result + temp.get("id").toString()+" "+ temp.getString("name") +" "
+                            + temp.getString("description")+ " "+ temp.getString("img")+ " "
+                            + temp.get("votes").toString()+"\n";
                 }
                 response_content.setText(result);
             }
             catch (Exception e) {
                 Log.i(TAG, e.toString());
+            }
+        }
+    };
+
+    Runnable getVoteMoviesId_Task= new Runnable() {
+        @Override
+        public void run() {
+            String baseURL = "http://172.18.71.17:8080/FilmGoGo/votemovie";
+            String result= "";
+            int customer_id= 4;
+            try {
+                String url = baseURL + "/getVoteInfo/"+ customer_id;
+                HttpGet httpGet= new HttpGet(url);
+                HttpResponse httpResponse= new DefaultHttpClient().execute(httpGet);
+                result = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Message msg = new Message();
+            Bundle data = new Bundle();
+            data.putString("value", result);
+            msg.setData(data);
+            getVoteMoviesId_handler.sendMessage(msg);
+        }
+    };
+
+    Handler getVoteMoviesId_handler= new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            String TAG = "json";
+            String result= "";
+            try{
+                JSONArray array= new JSONObject(val).getJSONArray("votemovieid");
+                for (int i = 0; i < array.length(); ++i) {
+                    JSONObject temp = array.getJSONObject(i);
+                    result= result + temp.get("id").toString()+"\n";
+                }
+                response_content.setText(result);
+            }
+            catch (Exception e) {
+                Log.i(TAG, e.toString());
+            }
+        }
+    };
+
+
+    Runnable Vote_movie_Task= new Runnable() {
+        @Override
+        public void run() {
+            String baseURL = "http://172.18.71.17:8080/FilmGoGo/votemovie";
+            int movie_id= 1;  //这里指定要投票的电影id
+            int customer_id= 4;  //传用户id
+            try{
+                String url = baseURL + "/vote"+ '/'+ customer_id+'/'+movie_id;
+                HttpGet httpGet = new HttpGet(url);
+                HttpResponse httpResponse = new DefaultHttpClient().execute(httpGet);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     };

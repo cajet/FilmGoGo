@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -19,8 +20,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity  {
 
-    private Button login_btn, manager_btn, oldmovie_btn, manager_delete_btn;
-    private Button register_btn;
+    private Button login_btn, manager_btn, oldmovie_btn, manager_delete_btn, setVoteZero_btn;
+    private Button register_btn, manager_add_votemovies_btn, manager_delete_votemovies_btn;
     private EditText muserName;
     private EditText mPassword;
     private View mProgressView;
@@ -44,6 +45,9 @@ public class MainActivity extends Activity  {
         oldmovie_btn= (Button) findViewById(R.id.oldmoviePage);
         manager_btn= (Button) findViewById(R.id.manager);
         manager_delete_btn= (Button) findViewById(R.id.manager_delete);
+        manager_add_votemovies_btn= (Button) findViewById(R.id.manager_add_votemovies);
+        manager_delete_votemovies_btn= (Button) findViewById(R.id.manager_delete_votemovies);
+        setVoteZero_btn= (Button) findViewById(R.id.setVotezero);
     }
 
     private void setListener() {
@@ -81,6 +85,27 @@ public class MainActivity extends Activity  {
                 startActivity(intent3);
             }
         });
+        manager_add_votemovies_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent5= new Intent(MainActivity.this, Manager_add_votemovies.class);
+                startActivity(intent5);
+            }
+        });
+        manager_delete_votemovies_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent6= new Intent(MainActivity.this, Manager_delete_votemovies.class);
+                startActivity(intent6);
+            }
+        });
+        setVoteZero_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(setVoteZero_Task).start();
+            }
+        });
+
     }
 
     private void attemptSignIn() {
@@ -149,6 +174,21 @@ public class MainActivity extends Activity  {
             }
             catch (Exception e) {
                 Log.i(TAG, e.toString());
+            }
+        }
+    };
+
+    Runnable setVoteZero_Task= new Runnable() {
+        @Override
+        public void run() {
+            String baseURL = "http://172.18.71.17:8080/FilmGoGo/votemovie";
+            int movie_id= 1;  //这里指定要票数清零的电影id
+            try{
+                String url = baseURL + "/setVoteZero/"+ movie_id;
+                HttpGet httpGet = new HttpGet(url);
+                HttpResponse httpResponse = new DefaultHttpClient().execute(httpGet);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     };

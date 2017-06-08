@@ -70,7 +70,6 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="登录"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
@@ -80,7 +79,6 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="注册"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
@@ -89,22 +87,38 @@
                 android:layout_height="wrap_content"
                 style="?android:textAppearanceSmall"
                 android:id="@+id/oldmoviePage"
-                android:text="跳到老电影预定页面"/>
+                android:text="用户端老电影预定/投票"/>
 
             <Button
                 android:id="@+id/manager"
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="跳到管理员添加电影页面"/>
+                android:text="管理员添加上映电影"/>
             <Button
                 android:id="@+id/manager_delete"
                 style="?android:textAppearanceSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="跳到管理员删除电影页面"/>
-
-
+                android:text="管理员删除上映电影"/>
+            <Button
+                android:id="@+id/manager_add_votemovies"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="管理员添加投票电影"/>
+            <Button
+                android:id="@+id/manager_delete_votemovies"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="管理员删除投票电影"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:textAppearanceSmall"
+                android:id="@+id/setVotezero"
+                android:text="管理员对指定电影投票数清零"/>
 
         </LinearLayout>
     </ScrollView>

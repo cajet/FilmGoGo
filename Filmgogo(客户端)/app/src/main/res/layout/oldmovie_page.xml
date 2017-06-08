@@ -69,6 +69,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/vote_movie"
             android:text="投票"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/getVotedInfo"
+            android:text="获取用户投票情况"/>
     </LinearLayout>
     <TextView
         android:id="@+id/oldmovie_response_content"
