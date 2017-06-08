@@ -35,7 +35,14 @@ public class ReservationRequest {
 	@RequestMapping("/{cuid}/insert/{seatid}")
 	void insertReservation(@PathVariable("cuid") int customer_id, @PathVariable("seatid") int seat_id, HttpServletResponse response) throws IOException
 	{
-		rd.insertReservation(customer_id, seat_id);
+		//rd.insertReservation(customer_id, seat_id);
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out= response.getWriter();
+		JSONObject res = new JSONObject();
+		res.put("insert_reservations", rd.insertReservation(customer_id, seat_id));
+		out.print(res.toString());
+		out.flush();
+		out.close();
 	}
 	
 	@RequestMapping("/{cuid}/delete/{seatid}")

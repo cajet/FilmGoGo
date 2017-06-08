@@ -37,4 +37,23 @@ public class ShowtimeDAO {
     	});
     	return JSONArray.fromObject(ls).toString();
     }
+    
+    public String getOldShowtimes(int mid) {
+    	String sql = "select oldshowtime.id, oldshowtime.time, oldshowtime.price from oldshowtime "
+    			+ "where oldshowtime.mid = ?;";
+    	Object[] para = new Object[]{mid};
+    	List<ShowtimeVO> ls = jdb.query(sql, para, new RowMapper<ShowtimeVO>(){
+
+			public ShowtimeVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				ShowtimeVO s = new ShowtimeVO();
+				s.setId(res.getInt("id"));
+				s.setOldTime(res.getString("time"));
+				s.setOldPrice(res.getString("price"));
+				return s;
+			}
+    		
+    	});
+    	return JSONArray.fromObject(ls).toString();
+	}
 }

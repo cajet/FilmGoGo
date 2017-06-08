@@ -20,6 +20,16 @@ public class ReservationVO {
 	
 	private float ticket_price;
 	
+	private String old_movie_name;
+	
+	private String old_time;
+	
+	private int old_seat_row;
+	
+	private int old_seat_column;
+	
+	private String old_price;
+	
 	public int getId() {
 		return id;
 	}
@@ -79,5 +89,37 @@ public class ReservationVO {
 	
 	public void setTicketPrice(float ticket_price) {
 		this.ticket_price= ticket_price;
+	}
+	
+	public String getOldmovieName() {
+		return old_movie_name;
+	}
+	public void setOldmovieName(String oldmovieName) {
+		this.old_movie_name= oldmovieName;
+	}
+	public String getOldtime() {
+		return old_time;
+	}
+	public void setOldtime(String oldtime) {
+		this.old_time= oldtime;
+	}
+	public int getOldseatRow() {
+		return old_seat_row;
+	}
+	public void setOldseatRow(int oldseatRow) {
+		this.old_seat_row= oldseatRow;
+	}
+	public int getOldseatCol() {
+		return old_seat_column;
+	}
+	public void setOldseatCol(int oldseatCol) {
+		this.old_seat_column= oldseatCol;
+	}
+	public String getOldPrice() {
+		return old_price;
+	}
+	public void setOldPrice(String oldPrice) {
+		this.old_price= oldPrice;
+		
 	}
 }

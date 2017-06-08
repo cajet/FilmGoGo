@@ -8,7 +8,11 @@ public class ShowtimeVO {
 	
     private Timestamp time;
     
+    private String oldtime;
+    
     private float price;
+    
+    private String oldprice;
     
 	public int getId()
 	{
@@ -33,5 +37,21 @@ public class ShowtimeVO {
 	public void setPrice(float price)
 	{
 		this.price = price;
+	}
+	public String getOldprice() 
+	{
+		return oldprice;
+	}
+	public void setOldPrice(String oldprice) 
+	{
+		this.oldprice= oldprice;
+	}
+	public String getOldTime() 
+	{
+		return oldtime;
+	}
+	public void setOldTime(String oldtime) 
+	{
+		this.oldtime= oldtime;
 	}
 }

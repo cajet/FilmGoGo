@@ -2,6 +2,8 @@ package com.filmgogo.VO;
 
 public class CustomerVO {
 	
+	private int id;
+	
 	private String name;
 	
 	private String password;
@@ -36,5 +38,12 @@ public class CustomerVO {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id= id;
 	}
 }

@@ -12,6 +12,10 @@ public class MovieVO {
 	
     private String image;
     
+    private float score;
+    
+    private String star;
+    
 	public int getId()
 	{
 		return id;
@@ -55,5 +59,21 @@ public class MovieVO {
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+	public float getScore() 
+	{
+		return score;
+	}
+	public void setScore(float score) 
+	{
+		this.score= score;
+	}
+	public String getStar() 
+	{
+		return star;
+	}
+	public void setStar(String star)
+	{
+		this.star= star;
 	}
 }

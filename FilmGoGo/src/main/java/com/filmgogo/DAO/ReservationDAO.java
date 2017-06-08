@@ -40,15 +40,50 @@ public class ReservationDAO {
 			}
     		
     	});
+		
+		String old_sql= "select reservation.id, oldmovie.name, oldshowtime.time, oldshowtime.price, oldseat.row, oldseat.col from reservation, oldmovie, oldshowtime, oldseat "
+				+"where reservation.cuid= ? and oldseat.id= reservation.oldseatid and oldshowtime.id= oldseat.sid and oldmovie.id= oldshowtime.mid;";
+		List<ReservationVO> ols = jdb.query(old_sql, para, new RowMapper<ReservationVO>(){
+
+			public ReservationVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				ReservationVO r = new ReservationVO();
+				r.setId(res.getInt("reservation.id"));
+				r.setOldmovieName(res.getString("oldmovie.name"));
+				r.setOldtime(res.getString("oldshowtime.time"));
+				r.setOldPrice(res.getString("oldshowtime.price"));
+				r.setOldseatRow(res.getInt("oldseat.row"));
+				r.setOldseatCol(res.getInt("oldseat.col"));
+				return r;
+			}
+    		
+    	});
+		ls.addAll(ols);
     	return JSONArray.fromObject(ls).toString();
 	}
 	
-	public void insertReservation(int customer_id, int seat_id) {
-		String stmt = "insert into reservation(cuid, seatid) values(?, ?);";
-        jdb.update(stmt, new Object[]{customer_id, seat_id});
-        //同时修改seat对应的座位状态
-      	String sql= "update seat set state= ?" +"where id= ?;";
-      	jdb.update(sql, new Object[]{"reserved", seat_id});
+	public String insertReservation(int customer_id, int seat_id) {
+		String mysql= "select id from reservation where seatid= ?;";
+		Object[] para= new Object[]{seat_id};
+		List<ReservationVO> ls = jdb.query(mysql, para, new RowMapper<ReservationVO>(){
+
+			public ReservationVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				ReservationVO r = new ReservationVO();
+				r.setId(res.getInt("reservation.id"));
+				return r;
+			}
+    		
+    	});
+		if (ls.isEmpty()) {
+			String stmt = "insert into reservation(cuid, seatid) values(?, ?);";
+			jdb.update(stmt, new Object[]{customer_id, seat_id});
+			//同时修改seat对应的座位状态
+			String sql= "update seat set state= ?" +"where id= ?;";
+			jdb.update(sql, new Object[]{"reserved", seat_id});
+		}
+		
+    	return JSONArray.fromObject(ls).toString();
 	}
 	
 	public void deleteReservation(int customer_id, int seat_id) {
@@ -56,6 +91,38 @@ public class ReservationDAO {
 		jdb.update(stmt, new Object[]{customer_id, seat_id});
 		//同时修改seat对应的座位状态
 		String sql= "update seat set state= ?" +"where id= ?;";
+		jdb.update(sql, new Object[]{"valid", seat_id});
+	}
+	
+	public String insertOldReservation(int customer_id, int seat_id) {
+		String mysql= "select id from reservation where oldseatid= ?;";
+		Object[] para= new Object[]{seat_id};
+		List<ReservationVO> ls = jdb.query(mysql, para, new RowMapper<ReservationVO>(){
+
+			public ReservationVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				ReservationVO r = new ReservationVO();
+				r.setId(res.getInt("reservation.id"));
+				return r;
+			}
+    		
+    	});
+		if (ls.isEmpty()) {
+			String stmt = "insert into reservation(cuid, oldseatid) values(?, ?);";
+			jdb.update(stmt, new Object[]{customer_id, seat_id});
+			//同时修改seat对应的座位状态
+			String sql= "update oldseat set state= ?" +"where id= ?;";
+			jdb.update(sql, new Object[]{"reserved", seat_id});
+		}
+		
+    	return JSONArray.fromObject(ls).toString();
+	}
+	
+	public void deleteOldReservation(int customer_id, int seat_id) {
+		String stmt= "delete from reservation where cuid= ? and oldseatid= ?;";
+		jdb.update(stmt, new Object[]{customer_id, seat_id});
+		//同时修改seat对应的座位状态
+		String sql= "update oldseat set state= ?" +"where id= ?;";
 		jdb.update(sql, new Object[]{"valid", seat_id});
 	}
 	

@@ -38,6 +38,26 @@ public class SeatDAO {
     	});
     	return JSONArray.fromObject(ls).toString();
     }
+	
+	public String getAlloldseats(int showtimeid) 
+	{
+		String sql = "select oldseat.id, oldseat.state, oldseat.row, oldseat.col from oldseat " + "where oldseat.sid = ?;";
+    	Object[] para = new Object[]{showtimeid};
+    	List<SeatVO> ls = jdb.query(sql, para, new RowMapper<SeatVO>(){
+
+			public SeatVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				SeatVO s = new SeatVO();
+				s.setId(res.getInt("id"));
+				s.setState(res.getString("state"));
+				s.setRow(res.getInt("row"));
+				s.setColumn(res.getInt("col"));
+				return s;
+			}
+    		
+    	});
+    	return JSONArray.fromObject(ls).toString();
+	}
 	/*
 	public void setState(int seatid)
 	{

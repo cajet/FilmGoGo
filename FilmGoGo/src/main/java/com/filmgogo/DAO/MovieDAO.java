@@ -40,7 +40,7 @@ public class MovieDAO {
 	/*-----------------通过cinema id获得对应影院上映的所有电影数据，这里因为设计成所有影院都有所有电影，所以其实cinema id并没有实际用处-----------------*/
 	public String getMoviesViaCid(int cid)
 	{
-		String sql = "select distinct movie.id, movie.name, movie.type, movie.description, movie.image from movie, cinema " + "where cinema.id = ?;";
+		String sql = "select distinct movie.id, movie.name, movie.type, movie.description, movie.image, movie.score, movie.star from movie, cinema " + "where cinema.id = ?;";
 		Object[] para = new Object[]{cid};
 		List<MovieVO> lm = jdb.query(sql, para, new RowMapper<MovieVO>(){
 
@@ -52,11 +52,29 @@ public class MovieDAO {
 				m.setType(res.getString("type"));
 				m.setDescription(res.getString("description"));
 				m.setImg(res.getString("image"));
+				m.setScore(res.getFloat("score"));
+				m.setStar(res.getString("star"));
 				return m;
 			}
 			
 		});
 		return JSONArray.fromObject(lm).toString();
+	}
+	
+	public String getOldMovies() {
+		String sql = "select * from oldmovie;";
+		List<MovieVO> olm= jdb.query(sql, new RowMapper<MovieVO>(){
+			public MovieVO mapRow(ResultSet res, int arg1) throws SQLException
+			{
+				MovieVO m = new MovieVO();
+				m.setId(res.getInt("id"));
+				m.setName(res.getString("name"));
+				m.setDescription(res.getString("description"));
+				m.setImg(res.getString("image"));
+				return m;
+			}
+		});
+		return JSONArray.fromObject(olm).toString();
 	}
 	
 }
