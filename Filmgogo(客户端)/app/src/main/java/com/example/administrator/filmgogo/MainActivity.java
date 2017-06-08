@@ -19,7 +19,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity  {
 
-    private Button login_btn;
+    private Button login_btn, manager_btn, oldmovie_btn, manager_delete_btn;
     private Button register_btn;
     private EditText muserName;
     private EditText mPassword;
@@ -41,6 +41,9 @@ public class MainActivity extends Activity  {
         mPassword = (EditText) findViewById(R.id.password);
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        oldmovie_btn= (Button) findViewById(R.id.oldmoviePage);
+        manager_btn= (Button) findViewById(R.id.manager);
+        manager_delete_btn= (Button) findViewById(R.id.manager_delete);
     }
 
     private void setListener() {
@@ -55,6 +58,27 @@ public class MainActivity extends Activity  {
             @Override
             public void onClick(View view) {
                 attemptSignIn();
+            }
+        });
+        manager_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2= new Intent(MainActivity.this, Manager_Activity.class);
+                startActivity(intent2);
+            }
+        });
+        manager_delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4= new Intent(MainActivity.this, Manager_Delete.class);
+                startActivity(intent4);
+            }
+        });
+        oldmovie_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3= new Intent(MainActivity.this, OldMovieInfo.class);
+                startActivity(intent3);
             }
         });
     }

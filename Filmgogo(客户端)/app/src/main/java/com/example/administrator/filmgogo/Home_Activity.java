@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -27,7 +29,7 @@ import java.util.Date;
 
 public class Home_Activity extends Activity{
 
-    Button movie_request_btn, cinema_request_btn, showtime_request_btn,
+    Button movie_request_btn, cinema_request_btn, showtime_request_btn, getIdByName_btn,
             seat_request_btn, list_reservation_btn, add_reservation_btn, delete_reservation_btn;
     TextView response_content;
 
@@ -48,6 +50,7 @@ public class Home_Activity extends Activity{
         list_reservation_btn= (Button) findViewById(R.id.list_reservation);
         add_reservation_btn= (Button) findViewById(R.id.add_reservation);
         delete_reservation_btn= (Button) findViewById(R.id.delete_reservation);
+        getIdByName_btn= (Button) findViewById(R.id.getIdByName);
     }
 
     private void setListener() {
@@ -99,7 +102,62 @@ public class Home_Activity extends Activity{
                 new Thread(Delete_Reservation_Task).start();
             }
         });
+
+        getIdByName_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(GetIdByName_Task).start();
+            }
+        });
+
     }
+
+    Runnable GetIdByName_Task= new Runnable() {
+        @Override
+        public void run() {
+            String baseURL= "http://172.18.71.17:8080/FilmGoGo/customer";
+            String result= "";
+            String name= "CAJET";
+            try {
+                String url= baseURL + "/getIdByName/" + name;
+                HttpGet httpGet= new HttpGet(url);
+                HttpResponse httpResponse= new DefaultHttpClient().execute(httpGet);
+                result = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Message msg = new Message();
+            Bundle data = new Bundle();
+            data.putString("value", result);
+            msg.setData(data);
+            GetIdByName_handler.sendMessage(msg);
+        }
+    };
+
+    Handler GetIdByName_handler= new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            String TAG = "json";
+            String result= "";
+            try{
+                //response_content.setText(val); /*显示JSON数据格式*/
+
+                JSONArray array= new JSONObject(val).getJSONArray("customerId");
+                for (int i = 0; i < array.length(); ++i) {
+                    JSONObject temp = array.getJSONObject(i);
+                    result= result + temp.get("id").toString()+"\n";
+                }
+                response_content.setText(result);
+            }
+            catch (Exception e) {
+                Log.i(TAG, e.toString());
+            }
+        }
+    };
+
 
     Runnable movieTask= new Runnable() { //返回所有电影的信息
         @Override
@@ -141,7 +199,8 @@ public class Home_Activity extends Activity{
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
                     result= result + temp.get("id").toString()+" "+ temp.getString("name") + " "+ temp.getString("type")+" "
-                            + temp.getString("description")+ " "+temp.getString("img")+ "\n";
+                            + temp.getString("description")+ " "+temp.getString("img")+ " "
+                            + temp.get("score").toString()+" "+temp.getString("star")+"\n";
                 }
                 response_content.setText(result);
             }
@@ -347,11 +406,18 @@ public class Home_Activity extends Activity{
                 //response_content.setText(val);
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
-                    JSONObject time = temp.getJSONObject("showTime");
-                    Date d = new Date(time.getLong("time"));
-                    result= result + temp.get("id").toString()+" "+ temp.get("movieName")+ " "+temp.get("cinemaName")
-                            + " "+ d + " "+ temp.get("ticketPrice") + " "+ temp.get("seatRow").toString()+"排"
-                            + temp.get("seatColumn").toString()+"座"+"\n";
+                    if (temp.get("oldmovieName").equals("")) {
+                        JSONObject time = temp.getJSONObject("showTime");
+                        Date d = new Date(time.getLong("time"));
+                        result = result + temp.get("id").toString() + " " + temp.get("movieName") + " " + temp.get("cinemaName")
+                                + " " + d + " " + temp.get("ticketPrice") + " " + temp.get("seatRow").toString() + "排"
+                                + temp.get("seatColumn").toString() + "座" + "\n";
+                    } else {
+                        result = result + temp.get("id").toString() + " " + temp.get("oldmovieName") + " "
+                                +"金逸珠江国际影城(大学城店)" + " "
+                                + temp.get("oldtime")+" "+temp.get("oldPrice") + " " + temp.get("oldseatRow").toString() + "排"
+                                + temp.get("oldseatCol").toString() + "座" + "\n";
+                    }
                 }
                 response_content.setText(result);
             } catch (Exception e) {
@@ -365,14 +431,44 @@ public class Home_Activity extends Activity{
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/reservation";
             String TAG = "AddReservation";
+            String result = "null";
             int customer_id= 4;
             int seat_id= 1;  //这里根据订单里选中的座位来指定id
             try{
                 String url = baseURL + '/'+ String.valueOf(customer_id)+"/insert/"+ String.valueOf(seat_id);
                 HttpGet httpGet = new HttpGet(url);
                 HttpResponse httpResponse = new DefaultHttpClient().execute(httpGet);
+                result = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+                Message msg = new Message();
+                Bundle data = new Bundle();
+                data.putString("value", result);
+                msg.setData(data);
+                Insert_Reservation_handler.sendMessage(msg);
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+    };
+
+    Handler Insert_Reservation_handler= new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            String TAG = "json";
+            String result= "";
+            try {
+                JSONArray array= new JSONObject(val).getJSONArray("insert_reservations");
+                //response_content.setText(val);
+                for (int i = 0; i < array.length(); ++i) {
+                    JSONObject temp = array.getJSONObject(i);
+                    result= result + temp.get("id").toString()+"\n";
+                }
+                if (result.isEmpty()) response_content.setText("生成订单成功");
+                else response_content.setText("该座位已被预定，生成订单失败");
+            } catch (Exception e) {
+                Log.i(TAG, e.toString());
             }
         }
     };

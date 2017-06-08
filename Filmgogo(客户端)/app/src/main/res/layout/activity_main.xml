@@ -84,6 +84,26 @@
                 android:text="注册"
                 android:textStyle="bold"
                 android:layout_gravity="center"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:textAppearanceSmall"
+                android:id="@+id/oldmoviePage"
+                android:text="跳到老电影预定页面"/>
+
+            <Button
+                android:id="@+id/manager"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="跳到管理员添加电影页面"/>
+            <Button
+                android:id="@+id/manager_delete"
+                style="?android:textAppearanceSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="跳到管理员删除电影页面"/>
+
 
 
         </LinearLayout>
