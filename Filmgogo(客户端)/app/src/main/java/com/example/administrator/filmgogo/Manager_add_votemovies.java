@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 public class Manager_add_votemovies extends Activity{
 
-    private EditText name, description, image;
+    private EditText name, description, image, star, score, type;
     private Button commit;
 
     @Override
@@ -39,6 +39,9 @@ public class Manager_add_votemovies extends Activity{
         description= (EditText) findViewById(R.id.add_votemovie_description);
         image= (EditText) findViewById(R.id.add_votemovie_imageurl);
         commit= (Button) findViewById(R.id.commit_add_movie);
+        star= (EditText) findViewById(R.id.add_votemovie_star);
+        score= (EditText) findViewById(R.id.add_votemovie_score);
+        type= (EditText) findViewById(R.id.add_votemovie_type);
     }
 
     private void setListener() {
@@ -60,6 +63,9 @@ public class Manager_add_votemovies extends Activity{
                 param.put("name", name.getText().toString());
                 param.put("description", description.getText().toString());
                 param.put("image", image.getText().toString());
+                param.put("star", star.getText().toString());
+                param.put("score", score.getText().toString());
+                param.put("type", type.getText().toString());
                 StringEntity se = new StringEntity(param.toString(),"UTF-8");
                 request.setEntity(se);
                 HttpResponse httpResponse = new DefaultHttpClient().execute(request);

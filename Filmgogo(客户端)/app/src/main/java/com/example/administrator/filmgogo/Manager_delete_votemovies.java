@@ -46,7 +46,7 @@ public class Manager_delete_votemovies extends Activity{
         @Override
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/deletevotemovie";
-            int votemovie_id= 22; //指定要删除的投票电影id
+            int votemovie_id= 63; //指定要删除的投票电影id
             try{
                 String url = baseURL + '/'+ votemovie_id;
                 HttpGet httpGet = new HttpGet(url);

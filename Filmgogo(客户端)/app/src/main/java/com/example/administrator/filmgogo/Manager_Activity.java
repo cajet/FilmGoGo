@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class Manager_Activity extends Activity{
 
     private Button commit_btn;
-    private EditText movie_name, movie_description, movie_image, time, movie_price;
+    private EditText movie_name, movie_description, movie_image, time, movie_price, type, star, score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,9 @@ public class Manager_Activity extends Activity{
         time= (EditText) findViewById(R.id.movie_showtime);
         movie_image= (EditText) findViewById(R.id.movie_image_url);
         movie_price= (EditText) findViewById(R.id.movie_price);
+        type= (EditText) findViewById(R.id.add_oldmovie_type);
+        star= (EditText) findViewById(R.id.add_oldmovie_star);
+        score= (EditText) findViewById(R.id.add_oldmovie_score);
     }
 
     private void setListener() {
@@ -66,6 +69,9 @@ public class Manager_Activity extends Activity{
                 param.put("image", movie_image.getText().toString());
                 param.put("time", time.getText().toString());
                 param.put("price", movie_price.getText().toString());
+                param.put("type", type.getText().toString());
+                param.put("star", star.getText().toString());
+                param.put("score", score.getText().toString());
                 // 绑定到请求 Entry
                 StringEntity se = new StringEntity(param.toString(),"UTF-8");
                 Log.i(TAG, se.toString());

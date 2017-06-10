@@ -154,8 +154,9 @@ public class OldMovieInfo extends Activity{
                 /*-----------------下面是根据JSON数据提取出各个数据的例子，几个请求都给出了处理数据的例子---------------*/
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
-                    result= result + temp.get("id").toString()+" "+ temp.getString("name") +" "
-                            + temp.getString("description")+ " "+temp.getString("img")+ "\n";
+                    result= result + temp.get("id").toString()+" "+ temp.getString("name") + " "+ temp.getString("type")+" "
+                            + temp.getString("description")+ " "+temp.getString("img")+ " "
+                            + temp.get("score").toString()+" "+temp.getString("star")+"\n";
                 }
                 response_content.setText(result);
             }
@@ -414,9 +415,9 @@ public class OldMovieInfo extends Activity{
                 JSONArray array= new JSONObject(val).getJSONArray("votemovies");
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject temp = array.getJSONObject(i);
-                    result= result + temp.get("id").toString()+" "+ temp.getString("name") +" "
-                            + temp.getString("description")+ " "+ temp.getString("img")+ " "
-                            + temp.get("votes").toString()+"\n";
+                    result= result + temp.get("id").toString()+" "+ temp.getString("name") + " "+ temp.getString("type")+" "
+                            + temp.getString("description")+ " "+temp.getString("img")+ " "
+                            + temp.get("score").toString()+" "+temp.getString("star")+" 票数:"+temp.get("votes").toString()+"\n";
                 }
                 response_content.setText(result);
             }
@@ -475,14 +476,38 @@ public class OldMovieInfo extends Activity{
         @Override
         public void run() {
             String baseURL = "http://172.18.71.17:8080/FilmGoGo/votemovie";
-            int movie_id= 1;  //这里指定要投票的电影id
+            int movie_id= 43;  //这里指定要投票的电影id
             int customer_id= 4;  //传用户id
+            String result= "";
             try{
                 String url = baseURL + "/vote"+ '/'+ customer_id+'/'+movie_id;
                 HttpGet httpGet = new HttpGet(url);
                 HttpResponse httpResponse = new DefaultHttpClient().execute(httpGet);
+                result = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            Message msg = new Message();
+            Bundle data = new Bundle();
+            data.putString("value", result);
+            msg.setData(data);
+            VoteMovie_handler.sendMessage(msg);
+        }
+    };
+    Handler VoteMovie_handler= new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            String TAG = "json";
+            String result= "";
+            try{
+                result= new JSONObject(val).getString("votemovie");
+                response_content.setText(result);
+            }
+            catch (Exception e) {
+                Log.i(TAG, e.toString());
             }
         }
     };

@@ -31,7 +31,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/movie_image_url"
             android:hint="电影图片url"/>
-
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_oldmovie_type"
+            android:hint="电影类型"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_oldmovie_star"
+            android:hint="电影演员"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_oldmovie_score"
+            android:hint="电影评分"/>
         <EditText
             android:id="@+id/movie_showtime"
             android:layout_width="match_parent"
