@@ -45,7 +45,8 @@ public class AddVoteMovie {
 		JSONObject res = new JSONObject();
 		res.put("success", true);
 		
-		addVoteMoviedao.addvotemovie(requestInfo.getString("name"), requestInfo.getString("description"), requestInfo.getString("image"));
+		addVoteMoviedao.addvotemovie(requestInfo.getString("name"), requestInfo.getString("description"), requestInfo.getString("image")
+				,requestInfo.getString("star"), requestInfo.getString("score"), requestInfo.getString("type"));
 		
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();

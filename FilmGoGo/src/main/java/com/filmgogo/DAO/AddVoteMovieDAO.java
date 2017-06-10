@@ -9,8 +9,8 @@ public class AddVoteMovieDAO {
 	@Autowired
     private JdbcTemplate jdb;
 	
-	public void addvotemovie(String name, String description, String image) {
-		String insert_sql= "insert into votemovie(name, description, image, votes) values(?, ?, ?, ?);";
-		jdb.update(insert_sql, new Object[]{name, description, image, 0});
+	public void addvotemovie(String name, String description, String image, String star, String score, String type) {
+		String insert_sql= "insert into votemovie(name, description, image, votes, star, score, type) values(?, ?, ?, ?, ?, ?, ?);";
+		jdb.update(insert_sql, new Object[]{name, description, image, 0, star, score, type});
 	}
 }

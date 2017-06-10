@@ -45,7 +45,8 @@ public class AddOldMovie {
 		JSONObject res = new JSONObject();
 		res.put("success", true);
 		addOldMovieDAO.addOldMovie(requestInfo.getString("name"), requestInfo.getString("description"), 
-				requestInfo.getString("image"),requestInfo.getString("time"), requestInfo.getString("price"));
+				requestInfo.getString("image"),requestInfo.getString("time"), requestInfo.getString("price")
+				,requestInfo.getString("type"), requestInfo.getString("star"), requestInfo.getString("score"));
 		
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();

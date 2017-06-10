@@ -20,7 +20,7 @@ public class AddOldMovieDAO {
 	@Autowired
     private JdbcTemplate jdb;
 	
-	public void addOldMovie(String name, String description, String image, String time, String price)
+	public void addOldMovie(String name, String description, String image, String time, String price, String type, String star, String score)
 	{
 		int movie_id;
         String getmovieId_sql= "select id from oldmovie where name= ?;";
@@ -36,8 +36,8 @@ public class AddOldMovieDAO {
 			
 		});
 		if (lm.isEmpty()) {
-			String oldmovie_sql = "insert into oldmovie(name, description, image) values(?, ?, ?);";
-	        jdb.update(oldmovie_sql, new Object[]{name, description, image});
+			String oldmovie_sql = "insert into oldmovie(name, description, image, type, star, score) values(?, ?, ?, ?, ?, ?);";
+	        jdb.update(oldmovie_sql, new Object[]{name, description, image, type, star, score});
 	        lm = jdb.query(getmovieId_sql, para, new RowMapper<MovieVO>(){
 				public MovieVO mapRow(ResultSet res, int arg1) throws SQLException
 				{

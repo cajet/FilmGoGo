@@ -38,53 +38,18 @@ public class ReaddataFromAPI {
 	public static void main(String[] args) {
 		
 		//initTable();
-		
-		/*------------------------获取正在上映的电影列表的API，插入电影数据-----------------------*/
-		/*String url_movie= "http://m.maoyan.com/movie/list.json";
-		String json_movie= loadJson(url_movie);
+		/*
+		String douban_movie= "https://api.douban.com/v2/movie/in_theaters";
+		String json_movie= loadJson(douban_movie);
 		JSONObject jsonObject= JSONObject.fromObject(json_movie);
-		JSONArray array= jsonObject.getJSONObject("data").getJSONArray("movies");
-		String insert_movie;
-		JSONObject subObject;
-		for (int i= 0; i< array.size(); i++) {
-			subObject= array.getJSONObject(i); 
-			insert_movie = "insert into movie(name, type, description, image, apiid, score, star) values('"+subObject.get("nm")+"','"+subObject.get("cat")+"','"+subObject.get("scm")+"','"+subObject.get("img")+"','"+subObject.get("id")+"','"+subObject.get("sc")+"','"+subObject.get("star")+"');";
-			loadDatatoDB(insert_movie);
-		}*/
-		
-		/*------------------------获取正在上映的电影简介的API，插入电影简介数据-----------------------*/
-		/*String find_movies_id= "select * from movie";
-		try {
-			con = DriverManager.getConnection(dburl, user, pass);  
-			con.setAutoCommit(false);
-			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(find_movies_id);
-			while (rs.next()) {
-				String url_description= "http://m.maoyan.com/movie/"+rs.getString(5)+".json";
-				String json_description= loadJson(url_description);
-				jsonObject= JSONObject.fromObject(json_description);
-				String temp= (String) jsonObject.getJSONObject("data").getJSONObject("MovieDetailModel").get("dra");
-				//System.out.println(temp);
-				String insert_description = "update movie set description = ? where apiid= ?";
-				PreparedStatement pst = con.prepareStatement(insert_description);
-		        pst.setString(1, temp);
-		        pst.setString(2, rs.getString(5));
-		        pst.executeUpdate();
-		        con.commit();
-			}
-	     } catch (Exception e) {  
-			  System.out.println(e);  
-	     }*/
-		
-		/*------------------------获取豆瓣老电影，插入电影简介数据-----------------------*/
-		String url_douban_movie= "https://api.douban.com/v2/movie/top250";
-		String json_douban_movie= loadJson(url_douban_movie);
-		JSONObject jsonObject= JSONObject.fromObject(json_douban_movie);
 		JSONArray array= jsonObject.getJSONArray("subjects");
+		JSONArray sub_arr;
 		JSONObject object;
-		String insert_votemovie;
-		String movie_name, movie_image, movie_description;
-		for (int i= 0; i< 20; i++) {
+		String insert_movie;
+		String movie_name, movie_image, movie_description, score;
+		for (int i= 0; i< 8; i++) {
+			String star= "";
+			String movie_type= "";
 			object= array.getJSONObject(i);
 			movie_name= object.getString("title");
 			movie_image= object.getJSONObject("images").getString("medium");
@@ -92,9 +57,52 @@ public class ReaddataFromAPI {
 			String url2="https://api.douban.com/v2/movie/subject/" +id;
 			String json_douban_movie2= loadJson(url2);
 			movie_description= JSONObject.fromObject(json_douban_movie2).getString("summary");
-			insert_votemovie = "insert into votemovie(name, description, image, votes) values('"+movie_name+"','"+movie_description+"','"+movie_image+"','"+ 0 +"');";
+			score= object.getJSONObject("rating").getString("average");
+			sub_arr= object.getJSONArray("genres");
+			for (int j= 0; j< sub_arr.size(); j++) {
+				movie_type= movie_type+ sub_arr.get(j)+" ";
+			}
+			sub_arr= object.getJSONArray("casts");
+			for (int k= 0; k< sub_arr.size(); k++) {
+				star= star+sub_arr.getJSONObject(k).getString("name")+" ";
+			}
+			//System.out.println(movie_name+'\n'+star+'\n'+score+'\n'+movie_type+'\n'+movie_image+'\n'+movie_description);
+			insert_movie = "insert into movie(name, description, image, type, score, star) values('"+movie_name+"','"+movie_description+"','"+movie_image+"','"+movie_type+"','"+score+"','"+star +"');";
+			loadDatatoDB(insert_movie);
+		}
+		*/
+		
+		/*------------------------获取豆瓣老电影，插入电影简介数据-----------------------*/
+		String url_douban_movie= "https://api.douban.com/v2/movie/top250";
+		String json_douban_movie= loadJson(url_douban_movie);
+		JSONObject jsonObject= JSONObject.fromObject(json_douban_movie);
+		JSONArray array= jsonObject.getJSONArray("subjects");
+		JSONArray sub_arr;
+		JSONObject object;
+		String insert_votemovie;
+		String movie_name, movie_image, movie_description, score;
+		for (int i= 0; i< 20; i++) {
+			String star= "";
+			String movie_type= "";
+			object= array.getJSONObject(i);
+			movie_name= object.getString("title");
+			movie_image= object.getJSONObject("images").getString("medium");
+			String id= object.getString("id");
+			String url2="https://api.douban.com/v2/movie/subject/" +id;
+			String json_douban_movie2= loadJson(url2);
+			movie_description= JSONObject.fromObject(json_douban_movie2).getString("summary");
+			score= object.getJSONObject("rating").getString("average");
+			sub_arr= object.getJSONArray("genres");
+			for (int j= 0; j< sub_arr.size(); j++) {
+				movie_type= movie_type+ sub_arr.get(j)+" ";
+			}
+			sub_arr= object.getJSONArray("casts");
+			for (int k= 0; k< sub_arr.size(); k++) {
+				star= star+sub_arr.getJSONObject(k).getString("name")+" ";
+			}
+			//System.out.println(movie_name+'\n'+star+'\n'+score+'\n'+movie_type+'\n'+movie_image+'\n'+movie_description);
+			insert_votemovie = "insert into votemovie(name, description, image, type, score, star, votes) values('"+movie_name+"','"+movie_description+"','"+movie_image+"','"+movie_type+"','"+score+"','"+star +"','"+ 0 +"');";
 			loadDatatoDB(insert_votemovie);
-			//System.out.println(movie_name+'\n'+movie_description+'\n'+movie_image);
 		}
 		
 		/*------------------------获取获取周边影院的API，插入影院数据-----------------------*/
