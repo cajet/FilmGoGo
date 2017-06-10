@@ -35,7 +35,18 @@ public class VoteMoviesRequest {
 	@RequestMapping("/vote/{cuid}/{mid}")
 	void votemovie(@PathVariable("mid") int mid, @PathVariable("cuid") int cuid,HttpServletResponse response) throws IOException
 	{
-		md.voteMovieById(mid, cuid);
+		boolean flag= md.voteMovieById(mid, cuid);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		JSONObject res = new JSONObject();
+		if (flag) {
+			res.put("votemovie", "success");
+		} else {
+			res.put("votemovie", "false");
+		}
+		out.print(res.toString());
+		out.flush();
+		out.close();
 	}
 	
 	@RequestMapping("/getVoteInfo/{cuid}")
@@ -53,6 +64,17 @@ public class VoteMoviesRequest {
 	@RequestMapping("/setVoteZero/{mid}")
 	void setVoteZero(@PathVariable("mid") int mid,HttpServletResponse response) throws IOException 
 	{
-		md.setVoteZero(mid);
+		boolean flag= md.setVoteZero(mid);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		JSONObject res = new JSONObject();
+		if (flag) {
+			res.put("setVoteZero", "success");
+		} else {
+			res.put("setVoteZero", "false");
+		}
+		out.print(res.toString());
+		out.flush();
+		out.close();
 	}
 }
