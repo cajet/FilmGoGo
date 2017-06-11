@@ -35,13 +35,13 @@ public class ShowTimeSelect extends AppCompatActivity {
     private ImageView back;
     private FixedSpeedScroller mScroller;
     public TextView cinemaName, movieName, movie_score, movie_type, movie_actor, one, two, three;
-    private ListView oneList, twoList, threeList;
+    private ListView oneList;
     private ViewPager show_time_viewPager;
     private ShowTimeFragmentPagerAdapter myFragmentPagerAdapter;
 
-    private List<HashMap<String, Object>> listItemOne,listItemTwo,listItemThree;
+    private List<HashMap<String, Object>> listItemOne;
 
-    private MySimpleAdapter adapterOne, adapterTwo, adapterThree;
+    private MySimpleAdapter adapterOne;
 
     public SharedPreferences accountState;
 
@@ -69,24 +69,13 @@ public class ShowTimeSelect extends AppCompatActivity {
 
 
         listItemOne = new ArrayList<HashMap<String, Object>>();
-        listItemTwo= new ArrayList<HashMap<String, Object>>();
-        listItemThree= new ArrayList<HashMap<String, Object>>();
 
         adapterOne = new MySimpleAdapter(this, listItemOne, R.layout.item_show_time,
                 new String[]{"time", "price"}, new int[]{R.id.id_show_time
                 , R.id.id_show_time_price});
 
-        adapterTwo = new MySimpleAdapter(this, listItemTwo, R.layout.item_show_time,
-                new String[]{"time", "price"}, new int[]{R.id.id_show_time
-                , R.id.id_show_time_price});
-
-        adapterThree = new MySimpleAdapter(this, listItemThree, R.layout.item_show_time,
-                new String[]{"time", "price"}, new int[]{R.id.id_show_time
-                , R.id.id_show_time_price});
 
         oneList.setAdapter(adapterOne);
-        twoList.setAdapter(adapterTwo);
-        threeList.setAdapter(adapterThree);
 
 
 
@@ -137,8 +126,6 @@ public class ShowTimeSelect extends AppCompatActivity {
         two = (TextView)findViewById(R.id.id_two);
         three = (TextView)findViewById(R.id.id_three);
         oneList = (ListView)findViewById(R.id.id_one_list);
-        twoList = (ListView)findViewById(R.id.id_two_list);
-        threeList = (ListView)findViewById(R.id.id_three_list);
         show_time_viewPager= (ViewPager) findViewById(R.id.show_time_viewPager);
         myFragmentPagerAdapter = new ShowTimeFragmentPagerAdapter(getSupportFragmentManager());
         show_time_viewPager.setAdapter(myFragmentPagerAdapter);
@@ -187,9 +174,6 @@ public class ShowTimeSelect extends AppCompatActivity {
         three.setVisibility(View.INVISIBLE);
 
         oneList.setVisibility(View.VISIBLE);
-        twoList.setVisibility(View.GONE);
-        threeList.setVisibility(View.GONE);
-
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("position", -1);
@@ -246,8 +230,6 @@ public class ShowTimeSelect extends AppCompatActivity {
 //                new Thread(movieTask).start();
                 buttonClick = 1;
                 oneList.setVisibility(View.VISIBLE);
-                twoList.setVisibility(View.GONE);
-                threeList.setVisibility(View.GONE);
                 set(0);
             }
         });
@@ -258,8 +240,6 @@ public class ShowTimeSelect extends AppCompatActivity {
 //                new Thread(cinemaTask).start();
                 buttonClick = 2;
                 oneList.setVisibility(View.GONE);
-                twoList.setVisibility(View.VISIBLE);
-                threeList.setVisibility(View.GONE);
                 set(1);
             }
         });
@@ -270,8 +250,6 @@ public class ShowTimeSelect extends AppCompatActivity {
 //                new Thread(cinemaTask).start();
                 buttonClick = 3;
                 oneList.setVisibility(View.GONE);
-                twoList.setVisibility(View.GONE);
-                threeList.setVisibility(View.VISIBLE);
                 set(2);
             }
         });
@@ -287,8 +265,6 @@ public class ShowTimeSelect extends AppCompatActivity {
 
 
             HashMap<String, Object> item1 = new HashMap<String, Object>();
-            HashMap<String, Object> item2 = new HashMap<String, Object>();
-            HashMap<String, Object> item3 = new HashMap<String, Object>();
 
 
 
@@ -315,18 +291,6 @@ public class ShowTimeSelect extends AppCompatActivity {
                 item1.put("price",  app.getListItemMovieShowTime().get(i).get("price").toString());
                 listItemOne.add(item1);
                 adapterOne.notifyDataSetChanged();
-            } else if (j == 2) {
-                item2.put("id",  app.getListItemMovieShowTime().get(i).get("id"));
-                item2.put("time", app.getListItemMovieShowTime().get(i).get("time"));
-                item2.put("price",  app.getListItemMovieShowTime().get(i).get("price").toString());
-                listItemTwo.add(item2);
-                adapterTwo.notifyDataSetChanged();
-            } else if (j == 3) {
-                item3.put("id",  app.getListItemMovieShowTime().get(i).get("id"));
-                item3.put("time", app.getListItemMovieShowTime().get(i).get("time"));
-                item3.put("price",  app.getListItemMovieShowTime().get(i).get("price").toString());
-                listItemThree.add(item3);
-                adapterThree.notifyDataSetChanged();
             }
 
         }
@@ -370,6 +334,7 @@ public class ShowTimeSelect extends AppCompatActivity {
             // TODO Auto-generated method stub
             View v= super.getView(position, convertView, parent);
             Button btn=(Button) v.findViewById(R.id.id_buy_ticket);
+            final TextView time = (TextView) v.findViewById(R.id.id_show_time);
             btn.setTag(position);
             btn.setOnClickListener(new View.OnClickListener() {
 
@@ -380,16 +345,16 @@ public class ShowTimeSelect extends AppCompatActivity {
                     SharedPreferences.Editor editor = accountState.edit();
                     if (buttonClick == 1) {
                         editor.putInt("showTimeId", Integer.parseInt(listItemOne.get(position).get("id").toString()));
-                    } else if (buttonClick == 2) {
-                        editor.putInt("showTimeId", Integer.parseInt(listItemTwo.get(position).get("id").toString()));
-                    } else if (buttonClick == 3) {
-                        editor.putInt("showTimeId", Integer.parseInt(listItemThree.get(position).get("id").toString()));
                     }
-
-
                     editor.commit();
-
                     Intent intent = new Intent(ShowTimeSelect.this, SelectSeat.class);
+                    TextView cinemaName = (TextView) findViewById(R.id.id_show_time_cinema_name);
+                    TextView movieName = (TextView) findViewById(R.id.id_show_time_movie_name);
+                    TextView day = (TextView) findViewById(R.id.id_one);
+                    intent.putExtra("cinemaName", cinemaName.getText().toString());
+                    intent.putExtra("movieName", movieName.getText().toString());
+                    intent.putExtra("day", day.getText().toString());
+                    intent.putExtra("time", time.getText().toString());
                     startActivity(intent);
                 }
             });

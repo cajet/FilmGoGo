@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class movieDescription extends AppCompatActivity {
 
     private ImageView back, iv_movie_img;
-    private TextView name, description, tv_actor, tv_score, tv_type;
+    private TextView title_movie_name, name, description, tv_actor, tv_score, tv_type;
     private Button selectCinema;
     private ListView cinemaList;
     private RequestData app;
@@ -66,7 +66,8 @@ public class movieDescription extends AppCompatActivity {
         name = (TextView) findViewById(R.id.id_description_movie_name);
         description = (TextView) findViewById(R.id.id_description_content);
         tv_actor = (TextView) findViewById(R.id.tv_actor);
-        cinemaList = (ListView) this.findViewById(R.id.id_select_movie_list);
+        cinemaList = (ListView) findViewById(R.id.id_select_movie_list);
+        title_movie_name = (TextView) findViewById(R.id.title_movie_name);
         tv_score = (TextView) findViewById(R.id.tv_score);
         tv_type = (TextView) findViewById(R.id.tv_type);
         iv_movie_img = (ImageView) findViewById(R.id.iv_movie_img);
@@ -79,6 +80,7 @@ public class movieDescription extends AppCompatActivity {
         position = intent.getIntExtra("position", 1);
         if (accountState.getInt("nowOrOld", 1) == 1) {
             name.setText(app.getListItemMovie().get(position).get("name").toString());
+            title_movie_name.setText(app.getListItemMovie().get(position).get("name").toString());
             description.setText(app.getListItemMovie().get(position).get("description").toString());
             tv_actor.setText(app.getListItemMovie().get(position).get("star").toString());
             tv_score.setText(app.getListItemMovie().get(position).get("score").toString());
@@ -89,6 +91,7 @@ public class movieDescription extends AppCompatActivity {
 
         } else {
             name.setText(app.getListItemOldMovie().get(position).get("name").toString());
+            title_movie_name.setText(app.getListItemOldMovie().get(position).get("name").toString());
             description.setText(app.getListItemOldMovie().get(position).get("description").toString());
             tv_actor.setText(app.getListItemOldMovie().get(position).get("star").toString());
             tv_score.setText(app.getListItemOldMovie().get(position).get("score").toString());
@@ -123,14 +126,17 @@ public class movieDescription extends AppCompatActivity {
 
 
     public void setListViewHeightBasedOnChildren(ListView listView) {
-
+        int totalHeight = 0;
+        for (int i = 0; i < adapterCinema.getCount(); i++) { // listAdapter.getCount()返回数据项的数目
+            View listItem = adapterCinema.getView(i, null, listView);
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+        }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        if (accountState.getInt("nowOrOld", 1) == 1)
-            params.height = 242 * listView.getCount();
-        else
-            params.height = 242;
-        //listView.getDividerHeight()获取子项间分隔符占用的高度
-        //params.height最后得到整个ListView完整显示需要的高度
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (adapterCinema.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
 }

@@ -24,7 +24,7 @@
             android:id="@+id/id_sign_in_back"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/left_arrow"/>
+            android:src="@drawable/left_arrow"/>
         <TextView
             android:id="@+id/sign_up_button"
             android:layout_width="60dp"

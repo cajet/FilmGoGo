@@ -72,10 +72,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 for (p = 0; p < 4; p++) {
                     if (seatId[p] != -1) {
                         new Thread(Pay_Task).start();
-                        Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     }
                 }
-                Toast.makeText(ConfirmOrderActivity.this, "点击", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

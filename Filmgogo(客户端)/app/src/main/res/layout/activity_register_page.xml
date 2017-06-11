@@ -22,7 +22,7 @@
             android:id="@+id/id_register_back"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@mipmap/left_arrow"/>
+            android:src="@drawable/left_arrow"/>
 
     </RelativeLayout>
     <ProgressBar

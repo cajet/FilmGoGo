@@ -24,11 +24,10 @@
 
             <ImageView
                 android:id="@+id/ic_location"
-                android:layout_marginLeft="5sp"
-                android:layout_width="15sp"
+                android:layout_width="20sp"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
-                android:src="@mipmap/ic_location" />
+                android:src="@drawable/ic_arrow" />
         </LinearLayout>
 
     <ImageView
@@ -38,7 +37,7 @@
         android:layout_marginRight="15sp"
         android:layout_width="20sp"
         android:layout_height="match_parent"
-        android:src="@mipmap/ic_search" />
+        android:src="@drawable/ic_search" />
 
     <TextView
         android:id="@+id/appbar_title"

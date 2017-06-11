@@ -310,7 +310,7 @@ public class RequestData extends Application{
                 /*-----------------下面是根据JSON数据提取出各个数据的例子，几个请求都给出了处理数据的例子---------------*/
                 for (int i = 0; i < array.length(); ++i) {
                     final int ii = i;
-                    final HashMap<String, Object> item = new HashMap<String, Object>();
+                    final HashMap<String, Object> item = new HashMap<>();
                     final JSONObject temp = array.getJSONObject(i);
                     item.put("id", temp.get("id").toString());
                     item.put("name", temp.getString("name"));

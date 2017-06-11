@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
     android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="5sp"
-        android:layout_marginBottom="5sp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginBottom="10sp">
         <ImageView
             android:id="@+id/movie_img"
             android:layout_width="60dp"
@@ -83,6 +83,5 @@
         android:background="@color/lineGrey"
         android:layout_width="match_parent"
         android:layout_height="0.5sp"
-        android:layout_marginLeft="10dp"
         android:layout_gravity="bottom" />
-</FrameLayout>
+</LinearLayout>

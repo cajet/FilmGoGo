@@ -113,4 +113,5 @@ public class OldMovieListFragment extends BaseFragment implements BuyButtonListe
     public void BuyButtonClick(final int position) {
         onItemAndButtonClick(position);
     }
+
 }
