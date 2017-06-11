@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="100dp">
+
+    <Button
+        android:id="@+id/id_reservation_delete"
+        android:layout_width="60dp"
+        android:layout_height="90dp"
+        android:layout_alignParentRight="true"
+        android:text="删除"/>
+
+   <TextView
+       android:id="@+id/id_reservation_movie_name"
+       android:layout_width="wrap_content"
+       android:layout_height="30dp"
+       android:text="神奇女侠"
+       android:textSize="20dp"
+       />
+    <TextView
+        android:id="@+id/id_reservation_piaojia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 票价: "
+        android:layout_toRightOf="@+id/id_reservation_movie_name"
+        android:layout_alignBottom="@+id/id_reservation_movie_name"/>
+
+    <TextView
+        android:id="@+id/id_reservation_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        android:layout_toRightOf="@+id/id_reservation_piaojia"
+        android:layout_alignBottom="@+id/id_reservation_piaojia"/>
+
+    <TextView
+        android:id="@+id/id_reservation_location"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="金逸珠江影城 1排3座"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/id_reservation_delete"
+        android:layout_below="@+id/id_reservation_movie_name"/>
+    <TextView
+        android:id="@+id/id_reservation_time"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="2017/6/6 星期六 66:66:66"
+        android:textSize="15dp"
+        android:layout_toLeftOf="@+id/id_reservation_delete"
+        android:layout_below="@+id/id_reservation_location"/>
+
+
+</RelativeLayout>

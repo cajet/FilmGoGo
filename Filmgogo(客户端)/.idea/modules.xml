@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Filmgogo.iml" filepath="$PROJECT_DIR$/Filmgogo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/filmgogo.iml" filepath="$PROJECT_DIR$/filmgogo.iml" />
     </modules>
   </component>
 </project>

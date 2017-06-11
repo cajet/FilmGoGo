@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp">
+
+        <View
+            android:id="@+id/v_divider"
+            android:background="@color/lineGrey"
+            android:layout_width="match_parent"
+            android:layout_height="0.5sp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="bottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="10sp">
+
+                <TextView
+                    android:id="@+id/cinema_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/normalTextDark"
+                    android:text="金逸珠江国际影城(大学城店)"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/cinema_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="番禺区小谷围街贝岗村中二横路1号高高新天地商业广场B2B001铺"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:layout_marginLeft="10sp"
+                android:text="300m"
+                android:textColor="@color/grey"
+                android:textSize="12sp"/>
+
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

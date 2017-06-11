@@ -1,111 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.administrator.filmgogo.MainActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
-    <ScrollView
-        android:id="@+id/login_form"
+    <FrameLayout
+        android:id="@+id/home_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </FrameLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:alpha="0.6"
+        android:background="@android:color/darker_gray"
+        />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/bottom_tab_layout"
+        android:layout_width="match_parent"
+        app:tabIndicatorHeight="0dp"
+        android:background="#f9f9f9"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@android:color/darker_gray"
+        android:layout_height="48dp">
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="用户名"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="密码"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="Sign in"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/sign_in_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="登录"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
-
-            <Button
-                android:id="@+id/sign_up_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="注册"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                style="?android:textAppearanceSmall"
-                android:id="@+id/oldmoviePage"
-                android:text="跳到老电影预定页面"/>
-
-            <Button
-                android:id="@+id/manager"
-                style="?android:textAppearanceSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="跳到管理员添加电影页面"/>
-            <Button
-                android:id="@+id/manager_delete"
-                style="?android:textAppearanceSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="跳到管理员删除电影页面"/>
+    </android.support.design.widget.TabLayout>
 
 
 
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

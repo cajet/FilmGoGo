@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fafafa">
+        <TextView
+            android:id="@+id/id_cinema_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="17sp"
+            android:textColor="@color/titleTextDark"
+            android:text="金逸珠江国际影城(大学城店)"
+            android:gravity="center"/>
+        <ImageView
+            android:paddingLeft="15dp"
+            android:id="@+id/id_cinema_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_arrow_left_red"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#d7d7d7"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/id_movie_list_in_cinema"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/id_cinema_back">
+
+    </ListView>
+
+</LinearLayout>
