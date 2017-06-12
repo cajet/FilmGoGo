@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SeatTableView">
+        <attr name="seat_checked" format="reference" />
+        <attr name="seat_sold" format="reference" />
+        <attr name="seat_available" format="reference" />
+        <attr name="overview_checked" format="color" />
+        <attr name="overview_sold" format="color" />
+        <attr name="txt_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ShapedImageView">
+        <attr name="shape_mode" format="enum">
+            <enum name="round_rect" value="1" />
+            <enum name="circle" value="2" />
+        </attr>
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
+</resources>
