@@ -8,9 +8,9 @@ A movie ticket booking system.
 2. TodoList and some helping docs: [Issues](https://github.com/cajet/FilmGoGo/issues)
 
 ### Developers
-Kaijia Huang : TeamLeader and front&back end developer [@cajet](https://github.com/cajet)</br>
-Shengyou Wei : front&back end developer [@devin1w](https://github.com/devin1w)</br>
-Guoyang Hong : front&back end developer [@wigh725](https://github.com/wigh725)</br>
+Kaijia Huang : TeamLeader and back end developer [@cajet](https://github.com/cajet)</br>
+Shengyou Wei : back end developer [@devin1w](https://github.com/devin1w)</br>
+Guoyang Hong : front end developer [@wigh725](https://github.com/wigh725)</br>
 Ziping Zeng : PM and front end developer [@sysupipin](https://github.com/sysupipin)</br> 
 Pengyu Yang : front end developer [@ypy1205](https://github.com/ypy1205)</br>
 Yuanhong Liao : testing engineer</br>
