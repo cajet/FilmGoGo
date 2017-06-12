@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:gravity="center_vertical"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"
+        android:layout_marginLeft="10dp">
+        <ImageView
+            android:id="@+id/movie_img"
+            android:layout_width="60dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="40dp">
+
+                <TextView
+                    android:id="@+id/movie_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="神奇女侠"
+                    android:textSize="15sp" />
+
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/bt_add_show_time"
+                    android:layout_width="65sp"
+                    android:layout_height="30sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="排期"
+                    android:background="@drawable/vote_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"/>
+                <Button
+                    android:id="@+id/bt_delete"
+                    android:layout_width="65sp"
+                    android:layout_height="30sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10sp"
+                    android:paddingRight="10sp"
+                    android:text="删除"
+                    android:background="@drawable/vote_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/v_divider"
+        android:background="#e6e6e6"
+        android:layout_width="match_parent"
+        android:layout_height="0.5sp"
+        android:layout_marginLeft="20sp"
+        android:layout_gravity="bottom" />
+</FrameLayout>
