@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10sp">
+        <ImageView
+            android:id="@+id/movie_img"
+            android:layout_width="60dp"
+            android:layout_height="90dp"
+            android:src="@drawable/movie_default"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="10sp">
+
+                <TextView
+                    android:id="@+id/movie_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="神奇女侠"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/movie_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/movie_name"
+                    android:text="5.0" />
+                <TextView
+                    android:id="@+id/movie_votes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="55"
+                    android:textColor="@color/textYellow"
+                    android:textSize="15sp"
+                    android:layout_below="@id/movie_name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:text="人想看"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="5sp"
+                    android:layout_toRightOf="@id/movie_votes"
+                    android:layout_above="@id/movie_type"/>
+                <TextView
+                    android:id="@+id/movie_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:text="动作,奇幻,冒险"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:layout_below="@id/movie_votes"/>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/bt_buy"
+                android:layout_width="65sp"
+                android:layout_height="30sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="想看"
+                android:drawableLeft="@drawable/like"
+                android:background="@drawable/vote_button"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/v_divider"
+        android:background="@color/lineGrey"
+        android:layout_width="match_parent"
+        android:layout_height="0.5sp"
+        android:layout_gravity="bottom" />
+</LinearLayout>
