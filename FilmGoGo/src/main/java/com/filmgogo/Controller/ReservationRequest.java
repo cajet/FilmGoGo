@@ -51,4 +51,16 @@ public class ReservationRequest {
 		rd.deleteReservation(customer_id, seat_id);
 	}
 	
+	@RequestMapping("/{cuid}/pay/{seatid}")
+	void payreservation(@PathVariable("cuid") int customer_id, @PathVariable("seatid") int seat_id, HttpServletResponse response) throws IOException 
+	{
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out= response.getWriter();
+		JSONObject res = new JSONObject();
+		res.put("payticket", rd.payticket(customer_id, seat_id));
+		out.print(res.toString());
+		out.flush();
+		out.close();
+	}
+	
 }

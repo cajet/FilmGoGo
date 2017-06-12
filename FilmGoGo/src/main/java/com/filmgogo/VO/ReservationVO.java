@@ -8,6 +8,10 @@ public class ReservationVO {
 	
 	private int id;
 	
+	private int seatid;
+	
+	private int oldseatid;
+	
 	private String movie_name;
 	
 	private String cinema_name;
@@ -29,6 +33,8 @@ public class ReservationVO {
 	private int old_seat_column;
 	
 	private String old_price;
+	
+	private boolean pay;
 	
 	public int getId() {
 		return id;
@@ -121,5 +127,23 @@ public class ReservationVO {
 	public void setOldPrice(String oldPrice) {
 		this.old_price= oldPrice;
 		
+	}
+	public boolean getPay() {
+		return pay;
+	}
+	public void setPay(boolean pay) {
+		this.pay= pay;
+	}
+	public int getSeatid() {
+		return seatid;
+	}
+	public void setSeatid(int seatid) {
+		this.seatid= seatid;
+	}
+	public int getOldSeatid() {
+		return oldseatid;
+	}
+	public void setOldSeatid(int oldseatid) {
+		this.oldseatid= oldseatid;
 	}
 }
