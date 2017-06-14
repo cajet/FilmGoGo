@@ -1,5 +1,6 @@
 package com.filmgogo.Controller;
 
+
 import java.awt.List;
 import java.awt.RenderingHints.Key;
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public class ReaddataFromAPI {
 	
 	public static void main(String[] args) {
 		
-		//initTable();
+		initTable();
 		/*
 		String douban_movie= "https://api.douban.com/v2/movie/in_theaters";
 		String json_movie= loadJson(douban_movie);
