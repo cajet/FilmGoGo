@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Filmgogo</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="error_invalid_password">密码不正确！</string>
+    <string name="error_field_required">该区域不得为空！</string>
+    <string name="error_invalid_username">用户名已注册！</string>
+    <string name="error_username_notexist">用户名不存在！</string>
+    <string name="sign_up_conpsd">确认密码</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+</resources>
