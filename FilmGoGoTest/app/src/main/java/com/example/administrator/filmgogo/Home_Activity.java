@@ -27,6 +27,7 @@ import java.util.Date;
  * Created by cajet on 2017/4/29.
  */
 
+
 public class Home_Activity extends Activity{
 
     Button movie_request_btn, cinema_request_btn, showtime_request_btn, getIdByName_btn,
